@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Smart House') }}</title>
+
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script> -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/material-icons.css') }}" rel="stylesheet">
+    <style>
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        .links > a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        @font-face {
+          font-family: 'Material Icons';
+          font-style: normal;
+          font-weight: 400;
+          src: url({{ asset( 'css/MaterialIcons-Regular.eot' ) }}); /* For IE6-8 */
+          src: local('Material Icons'),
+               local('MaterialIcons-Regular'),
+               url({{ asset( 'css/MaterialIcons-Regular.woff2' )}} ) format('woff2'),
+               url({{ asset( 'css/MaterialIcons-Regular.woff' )}} ) format('woff'),
+               url({{ asset( 'css/MaterialIcons-Regular.ttf' )}} ) format('truetype');
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="app">
+      <nav class="navbar navbar-expand-md navbar-light bg-light navbar-laravel">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="{{ url('/') }}">
+                  {{ config('app.name', 'Smart House') }}
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <!-- Left Side Of Navbar -->
+                  <ul class="navbar-nav mr-auto">
+                    @guest
+                      <li><a class="nav-link" href="#">Gráficas</a></li>
+                    @else
+                      <li><a class="nav-link" href="{{ route('home') }}">Panel de Control</a></li>
+                    @endguest
+                  </ul>
+
+                  <!-- Right Side Of Navbar -->
+                  <ul class="navbar-nav ml-auto">
+                      <!-- Authentication Links -->
+                      @guest
+                          <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                          <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                      @else
+                          <li class="nav-item dropdown">
+                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                  {{ Auth::user()->name }} {{ Auth::user()->lastname }} <span class="caret"></span>
+                              </a>
+
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="{{ route('home') }}">
+                                      Dashboard
+                                  </a>
+
+                                  <a class="dropdown-item" href="{{ route('logout') }}"
+                                     onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                      {{ __('Logout') }}
+                                  </a>
+
+                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                      @csrf
+                                  </form>
+                              </div>
+                          </li>
+                      @endguest
+                  </ul>
+              </div>
+          </div>
+      </nav>
+
+        <main class="py-4">
+            @yield('content')
+        </main>
+
+
+        <footer class="flex-center container-fluid">
+            <table>
+                <tr class="flex-center font-weight-bold">
+                  <td>
+                    John Alejandro Barahona Pineda
+                  </td>
+                </tr>
+                <tr class="flex-center font-weight-bold">
+                  <td>
+                    <strong>César Ándres Tejada Torres</strong>
+                  </td>
+                </tr>
+                <tr class="flex-center">
+                  <td class="links">
+                    <a href="#">Universidad del Quindío</a>
+                  </td>
+                </tr>
+            </table>
+        </footer>
+    </div>
+</body>
+</html>
