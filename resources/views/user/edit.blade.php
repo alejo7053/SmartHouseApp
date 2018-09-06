@@ -3,19 +3,19 @@
 <script type="text/javascript">
     var usersRole = new Array( {{count($usersOpt) }})
     var usersName = new Array( {{count($usersOpt) }})
-    uOsersRole["empty"] = ["e"];
+    usersRole["empty"] = ["e"];
     usersRole["admin"] = [];
     usersRole["userHouse"] = [];
     usersRole["userRoom"] = ["",
-    @foreach($usersOpt as $userO)
-            {{ $userO->id }},
+    @foreach($usersOpt as $userOpt)
+            {{ $userOpt->id }},
     @endforeach];
     usersName["empty"] = ["Seleccione..."];
     usersRole["admin"] = [];
     usersRole["userHouse"] = [];
     usersName["userRoom"] = ["Sin Usuario Casa",
-    @foreach($usersOpt as $userO)
-            "{{ $userO->name }} {{ $userO->lastname }}",
+    @foreach($usersOpt as $userOpt)
+            "{{ $user->name }} {{ $user->lastname }}",
     @endforeach];
 
     function roleChange(selectObj) {
