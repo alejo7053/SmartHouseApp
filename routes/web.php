@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/public', 'PublicController@index')->name('public');
+Route::get('/view', 'PublicController@index')->name('public');
 Route::get('/devices/rules/{id}', 'RuleController@create')->name('rules');
 Route::put('/devices/rules/{id}', 'RuleController@update')->name('rules.update');
 Route::get('/api/{token}/{dataUp}', 'CardController@update')->name('apiD');
