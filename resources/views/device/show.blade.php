@@ -29,6 +29,12 @@
               <td>Reglas:</td>
               <td>{{ $device->action }}</td>
           </tr>
+          @if(Auth::user()->role == "admin")
+          <tr>
+              <td>Id:</td>
+              <td> {{ $device->id }} </td>
+          </tr>
+          @endif
           <tr>
               <td>Creado:</td>
               <td>{{ $device->created_at }}</td>

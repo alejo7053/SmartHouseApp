@@ -28,6 +28,10 @@
           </tr>
           @if(Auth::user()->role == "admin")
           <tr>
+              <td>Id:</td>
+              <td> {{ $room->id }} </td>
+          </tr>
+          <tr>
               <td>Token:</td>
               <td> {{ $room->token }} </td>
           </tr>
