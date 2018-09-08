@@ -8,16 +8,21 @@ use App\Room;
 class CardController extends Controller
 {
     //
-    public function update($token, $dataUp)
+    public function update($id, $token, $dataUp)
     {
-        $dataUp = json_decode($dataUp);
-        $rooms= Room::whereIn('token', [$token])->first();
-        foreach ($dataUp as $data) {
-            $device = $rooms->devices()->whereIn('name',[$data->name])->first();
-            $device->fill((array)$data)->save();
+        $rooms = Room::findOrFail($id);
+        if($rooms->token == $token){
+            $dataUp = json_decode($dataUp);
+            foreach ($dataUp as $data) {
+                $device = $rooms->devices()->findOrFail($data->id);
+                $device->fill((array)$data)->save();
+            }
+            $dataDown = $rooms->devices()->whereIn('role',['load'])
+            ->select('name','status','value','action','start','end')->get();
+            return response()->json($dataDown);
         }
-        $dataDown = $rooms->devices()->whereIn('role',['load'])
-        ->select('name','status','value','action','start','end')->get();
-        return response()->json($dataDown);
+        else{
+            return response('403 Forbidden', 403);
+        }
     }
 }
