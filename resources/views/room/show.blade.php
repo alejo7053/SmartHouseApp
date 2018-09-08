@@ -26,6 +26,12 @@
               <td>Casa:</td>
               <td>@if($room->house_id != null) {{ $room->house->name }} @endif</td>
           </tr>
+          @if(Auth::user()->role == "admin")
+          <tr>
+              <td>Token:</td>
+              <td> {{ $room->token }} </td>
+          </tr>
+          @endif
           <tr>
               <td>Creada:</td>
               <td>{{ $room->created_at }}</td>
