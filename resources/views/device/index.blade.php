@@ -95,13 +95,14 @@
                           </tr>
                           <tr>
                             <td  class="bg-light text-muted">Valor</td>
-                            <td>{{ $device->value }}</td>
+                            <td id="v{{$device->id}}">{{ $device->value }}</td>
                           </tr>
                       </tbody>
                     </table>
                   </div>
               </div>
             </div>
+            <script> setInterval(function() {  document.location.reload() }, 5000); </script>
           @endforeach
         @endforeach
         @endif
