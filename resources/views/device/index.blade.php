@@ -64,7 +64,7 @@
         @endif
         @if(Auth::user()->role == "userRoom")
         @foreach($user->rooms as $room)
-          @foreach($room->devices as $device)
+          @foreach($room->devices->sortByDesc('role') as $device)
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header" id="t{{$device->id}}">{{ $device->description }}</div>
