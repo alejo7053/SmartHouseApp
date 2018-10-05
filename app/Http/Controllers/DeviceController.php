@@ -74,7 +74,14 @@ class DeviceController extends Controller
         // ]);
         $input = $request->all();
         $device->fill($input)->save();
-        return redirect('home');
+        if($request->user()->role == "userRoom")
+        {
+          return redirect(route('home').'#t'.$id);
+        }
+        else
+        {
+          return redirect('home');
+        }
     }
 
     public function destroy(Request $request, $id)

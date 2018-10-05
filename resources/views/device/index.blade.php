@@ -67,7 +67,7 @@
           @foreach($room->devices as $device)
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">{{ $device->description }}</div>
+                    <div class="card-header" id="t{{$device->id}}">{{ $device->description }}</div>
                     <div class="card-body">
                       <table class="table table-bordered">
                         <tbody>
@@ -75,10 +75,11 @@
                             <td class="bg-light text-muted">Habitación</td>
                             <td>{{ $device->room->name}}</td>
                           </tr>
+                          @if($device->role == "load")
                           <tr>
                             <td class="bg-light text-muted">Estado</td>
                             <td>{{ $device->status }}
-                            @if($device->role == "load")<a href="#" title="Cambiar Estado..."
+                              <a href="#t{{$device->id}}" title="Cambiar Estado..."
                             @if($device->status == "on") class="text-success" @else class="text-danger" @endif
                             onclick="if(confirm('¿Desea cambiar el estado del {{ $device->description }}?'))
                             {document.getElementById('status-form{{$device->id}}').submit();}"><i class="material-icons">cached</i></a></td>
@@ -88,21 +89,82 @@
                                 <input id="status" name="status" @if($device->status == "on")value="off"@else value="on" @endif style="display: none"></input>
                             </form>
                           </tr>
-                          <tr>
-                            <td class="bg-light text-muted">Reglas</td>
-                            <td>{{ $device->action }} <a href="{{ route('rules', $device->id) }}" title="Añadir Regla..."><i class="material-icons">add_circle</i></a></td>
+                            @if($device->name != "Control AC" && $device->name != "Control DC")
+                              <tr>
+                                <td class="bg-light text-muted">Reglas</td>
+                                <td>{{ $device->action }} <a href="{{ route('rules', $device->id) }}" title="Añadir Regla..."><i class="material-icons">add_circle</i></a></td>
+                              </tr>
                             @endif
-                          </tr>
-                          <tr>
-                            <td  class="bg-light text-muted">Valor</td>
-                            <td id="v{{$device->id}}">{{ $device->value }}</td>
-                          </tr>
+                          @endif
+                          @if($device->name == "Control AC")
+                            <tr>
+                              <td  class="bg-light text-muted">Valor</td>
+                              <td><div id="v{{$device->id}}">{{ $device->value }}</div>
+                                <div class="slidecontainer">
+                                  <a href="#t{{$device->id}}" title="Cambiar Valor..."
+                                  onchange="{document.getElementById('value-form{{$device->id}}').submit();}">
+                                  <form id="value-form{{$device->id}}" method="POST" action="{{ route('devices.update', $device->id) }}">
+                                      @method('PUT')
+                                      @csrf
+                                      <input type="range" min="20" max="100" value="{{$device->value}}" step="20" class="slider" id="vR{{$device->id}}" name="value">
+                                  </form>
+                                </div>
+                              </td>
+                            </tr>
+                            <script>
+                                var slider{{$device->id}} = document.getElementById("vR{{$device->id}}");
+                                var output{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                output{{$device->id}}.innerHTML = slider{{$device->id}}.value; // Display the default slider value
+                                // Update the current slider value (each time you drag the slider handle)
+                                slider{{$device->id}}.oninput = function() {
+                                output{{$device->id}}.innerHTML = this.value;
+                              };
+                            </script>
+                          @elseif($device->name == "Control DC")
+                            <tr>
+                              <td  class="bg-light text-muted">Valor</td>
+                              <td><div id="v{{$device->id}}">{{ $device->value }}</div>
+                                <div class="slidecontainer">
+                                  <a href="#t{{$device->id}}" title="Cambiar Valor..."
+                                  onchange="{document.getElementById('value-form{{$device->id}}').submit();}">
+                                  <form id="value-form{{$device->id}}" method="POST" action="{{ route('devices.update', $device->id) }}">
+                                      @method('PUT')
+                                      @csrf
+                                      <input type="range" min="-100" max="100" value="{{$device->value}}" step="10" class="slider" id="vR{{$device->id}}" name="value">
+                                  </form>
+                                </div>
+                              </td>
+                            </tr>
+                            <script>
+                                var slider{{$device->id}} = document.getElementById("vR{{$device->id}}");
+                                var output{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                output{{$device->id}}.innerHTML = slider{{$device->id}}.value; // Display the default slider value
+                                // Update the current slider value (each time you drag the slider handle)
+                                slider{{$device->id}}.oninput = function() {
+                                output{{$device->id}}.innerHTML = this.value;
+                              };
+                            </script>
+                          @elseif($device->role == "sensor")
+                              @if($device->name != "Lluvia" && $device->name != "Movimiento")
+                                <tr>
+                                  <td  class="bg-light text-muted">Valor</td>
+                                  <td id="v{{$device->id}}">{{ $device->value }}</td>
+                                </tr>
+                              @else
+                                <tr>
+                                  <td  class="bg-light text-muted">Ultimo: </td>
+                                  <td id="v{{$device->id}}">{{ $device->updated_at->setTimezone('America/Bogota') }}</td>
+                                </tr>
+                              @endif
+                          @endif
                       </tbody>
                     </table>
                   </div>
               </div>
             </div>
-            <script> setInterval(function() {  document.location.reload() }, 5000); </script>
+            <script>
+                setInterval(function() {  window.location.reload() }, 10000);
+            </script>
           @endforeach
         @endforeach
         @endif
