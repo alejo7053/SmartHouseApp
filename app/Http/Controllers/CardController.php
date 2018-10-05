@@ -18,7 +18,7 @@ class CardController extends Controller
                 $device->fill((array)$data)->save();
             }
             $dataDown = $rooms->devices()->whereIn('role',['load'])
-            ->select('id','name','status','value','action','start','end')->get();
+            ->select('id','status','value','action','start','end')->get();
             return response()->json($dataDown);
         }
         else{
