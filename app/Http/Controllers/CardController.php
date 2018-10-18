@@ -19,7 +19,8 @@ class CardController extends Controller
             }
             $dataDown = $rooms->devices()->whereIn('role',['load'])
             ->select('id','status','value','action','start','end')->get();
-            return response()->json($dataDown);
+            return response(json_encode($dataDown))
+                    ->header('Content-Type', 'application/json');
         }
         else{
             return response('403 Forbidden', 403);
