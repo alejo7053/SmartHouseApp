@@ -22,8 +22,7 @@ class CardController extends Controller
             foreach ($dataDown as $data) {
               $data->value = floatval($data->value);
             }
-            return response(json_encode($dataDown))
-                    ->header('Content-Type', 'application/json');
+            return response()->json($dataDown);
         }
         else{
             return response('403 Forbidden', 403);
