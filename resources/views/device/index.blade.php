@@ -163,7 +163,7 @@
               </div>
             </div>
             <script>
-                setInterval(function() {  window.location.reload() }, 10000);
+                // setInterval(function() {  window.location.reload() }, 10000);
             </script>
           @endforeach
         @endforeach
