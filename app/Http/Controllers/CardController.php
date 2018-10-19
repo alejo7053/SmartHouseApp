@@ -19,7 +19,9 @@ class CardController extends Controller
             }
             $dataDown = $rooms->devices()->whereIn('role',['load'])
             ->select('id','status','value','action','start','end')->get();
-            dd($dataDown);
+            foreach ($dataDown as $data) {
+              $data->value = floatval($data->value);
+            }
             return response(json_encode($dataDown))
                     ->header('Content-Type', 'application/json');
         }
