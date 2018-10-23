@@ -144,10 +144,43 @@
                                 output{{$device->id}}.innerHTML = this.value;
                               };
                             </script>
+                          @elseif($device->name == "Simple DC")
+                              <tr>
+                                <td  class="bg-light text-muted">Valor</td>
+                                <td><div id="v{{$device->id}}">{{ $device->value }}</div>
+                                  <div class="slidecontainer">
+                                    <a href="#t{{$device->id}}" title="Cambiar Valor..."
+                                    onchange="{document.getElementById('value-form{{$device->id}}').submit();}">
+                                    <form id="value-form{{$device->id}}" method="POST" action="{{ route('devices.update', $device->id) }}">
+                                        @method('PUT')
+                                        @csrf
+                                        <input type="range" min="10" max="100" value="{{$device->value}}" step="10" class="slider" id="vR{{$device->id}}" name="value">
+                                    </form>
+                                  </div>
+                                </td>
+                              </tr>
+                              <script>
+                                  var slider{{$device->id}} = document.getElementById("vR{{$device->id}}");
+                                  var output{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                  output{{$device->id}}.innerHTML = slider{{$device->id}}.value; // Display the default slider value
+                                  // Update the current slider value (each time you drag the slider handle)
+                                  slider{{$device->id}}.oninput = function() {
+                                  output{{$device->id}}.innerHTML = this.value;
+                                };
+                              </script>
                           @elseif($device->role == "sensor")
                               @if($device->name != "Lluvia" && $device->name != "Movimiento")
                                 <tr>
                                   <td  class="bg-light text-muted">Valor</td>
+                                  <td id="v{{$device->id}}">{{ $device->value }}</td>
+                                </tr>
+                              @elseif($device->name == "Lluvia")
+                                <tr>
+                                  <td  class="bg-light text-muted">Ultimo: </td>
+                                  <td id="v{{$device->id}}">{{ $device->updated_at->setTimezone('America/Bogota') }}</td>
+                                </tr>
+                                <tr>
+                                  <td  class="bg-light text-muted">Valor: </td>
                                   <td id="v{{$device->id}}">{{ $device->value }}</td>
                                 </tr>
                               @else
