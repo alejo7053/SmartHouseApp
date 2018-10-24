@@ -174,15 +174,37 @@
                                   <td  class="bg-light text-muted">Valor</td>
                                   <td id="v{{$device->id}}">{{ $device->value }}</td>
                                 </tr>
+                                <script>
+                                  var air{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                  if(air{{$device->id}}.innerHTML > 2500)
+                                  {
+                                    air{{$device->id}}.innerHTML = "Peligro"
+                                  }
+                                  else if (air{{$device->id}}.innerHTML > 1700) {
+                                    air{{$device->id}}.innerHTML = "Alerta"
+                                  }
+                                  else
+                                  {
+                                    air{{$device->id}}.innerHTML = "Normal"
+                                  }
+                                </script>
                               @elseif($device->name == "Lluvia")
                                 <tr>
                                   <td  class="bg-light text-muted">Ultimo: </td>
-                                  <td id="v{{$device->id}}">{{ $device->updated_at->setTimezone('America/Bogota') }}</td>
+                                  <td id="vt{{$device->id}}">{{ $device->updated_at->setTimezone('America/Bogota') }}</td>
                                 </tr>
                                 <tr>
                                   <td  class="bg-light text-muted">Valor: </td>
                                   <td id="v{{$device->id}}">{{ $device->value }}</td>
                                 </tr>
+                                <script>
+                                  var rain{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                  if(rain{{$device->id}}.innerHTML == 1){
+                                    rain{{$device->id}}.innerHTML = "Llueve";
+                                  }else{
+                                    rain{{$device->id}}.innerHTML = "No Llueve";
+                                  }
+                                </script>
                               @else
                                 <tr>
                                   <td  class="bg-light text-muted">Ultimo: </td>
@@ -196,7 +218,7 @@
               </div>
             </div>
             <script>
-                // setInterval(function() {  window.location.reload() }, 10000);
+                setInterval(function() {  window.location.reload() }, 10000);
             </script>
           @endforeach
         @endforeach
