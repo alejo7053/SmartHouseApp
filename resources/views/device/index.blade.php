@@ -174,20 +174,22 @@
                                   <td  class="bg-light text-muted">Valor</td>
                                   <td id="v{{$device->id}}">{{ $device->value }}</td>
                                 </tr>
-                                <script>
-                                  var air{{$device->id}} = document.getElementById("v{{$device->id}}");
-                                  if(air{{$device->id}}.innerHTML > 2500)
-                                  {
-                                    air{{$device->id}}.innerHTML = "Peligro"
-                                  }
-                                  else if (air{{$device->id}}.innerHTML > 1700) {
-                                    air{{$device->id}}.innerHTML = "Alerta"
-                                  }
-                                  else
-                                  {
-                                    air{{$device->id}}.innerHTML = "Normal"
-                                  }
-                                </script>
+                                @if($device->name == "Air")
+                                    <script>
+                                      var air{{$device->id}} = document.getElementById("v{{$device->id}}");
+                                      if(air{{$device->id}}.innerHTML > 2500)
+                                      {
+                                        air{{$device->id}}.innerHTML = "Peligro"
+                                      }
+                                      else if (air{{$device->id}}.innerHTML > 1700) {
+                                        air{{$device->id}}.innerHTML = "Alerta"
+                                      }
+                                      else
+                                      {
+                                        air{{$device->id}}.innerHTML = "Normal"
+                                      }
+                                    </script>
+                                @endif
                               @elseif($device->name == "Lluvia")
                                 <tr>
                                   <td  class="bg-light text-muted">Ultimo: </td>
