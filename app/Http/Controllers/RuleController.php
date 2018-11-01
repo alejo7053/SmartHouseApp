@@ -44,7 +44,10 @@ class RuleController extends Controller
           $input['start']=null;
           $input['end']=null;
         }
+        else if($request->action == "off"){
+          $input['end']=null;
+        }
         $device->fill($input)->save();
-        return redirect('home');
+        return redirect(route('home').'#t'.$id);
     }
 }
