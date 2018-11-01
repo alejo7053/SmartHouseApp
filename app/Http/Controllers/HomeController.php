@@ -51,6 +51,20 @@ class HomeController extends Controller
         else if($request->user()->role == "userRoom")
         {
             $user = User::findOrFail($request->user()->id);
+
+            // $collection = collect([
+            //     ['name' => 'Desk', 'colors' => ['Black', 'Mahogany']],
+            //     ['name' => 'Chair', 'colors' => ['Black']],
+            //     ['name' => 'Bookcase', 'colors' => ['Red', 'Beige', 'Brown']],
+            //     ['name' => 'Bocase', 'colors' => ['Black']],
+            // ]);
+            //
+            // $sorted = $collection->sortBy(function ($product, $key) {
+            //     return count($product['colors']).$product['name'];
+            // });
+            //
+            // dd($sorted->values()->all());
+
             return view('home', ['user'=>$user]);
         }
     }

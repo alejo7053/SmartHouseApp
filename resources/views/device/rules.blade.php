@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="col-md-4 container-fluid">
     {{ Form::model($device, [
           'method' => 'PUT',
@@ -18,7 +29,7 @@
 
       <div class="form-group">
           {{ Form::label('action','Desactivar Regla' , ['class' => 'control-label']) }}
-          {{ Form::radio('action', '') }}
+          {{ Form::radio('action', '0') }}
       </div>
 
       <label for="example" class="form-group">Ej: 2018-09-25 18:00:00</label>
