@@ -60,7 +60,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required | string | max:66',
             'lastname' => 'required | string | max:66',
-            'email' => 'required | email | unique:users',
+            'email' => 'required | email',
             'password' => 'required | string | min:8 | max:64',
         ]);
         $input = $request->all();
