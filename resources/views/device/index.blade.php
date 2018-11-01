@@ -69,7 +69,7 @@
           }) as $device)
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header" id="t{{$device->id}}">{{ $device->description }}</div>
+                    <div class="card-header" id="t{{$device->id}}"><a href="#t{{$device->id}}" class="card-link">{{ $device->description }}</a></div>
                     <div class="card-body">
                       <table class="table table-bordered">
                         <tbody>

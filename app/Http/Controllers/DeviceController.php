@@ -76,7 +76,7 @@ class DeviceController extends Controller
         $device->fill($input)->save();
         if($request->user()->role == "userRoom")
         {
-          return redirect('home');
+          return redirect(route('home').'#t'.$id);
         }
         else
         {
