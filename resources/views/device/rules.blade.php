@@ -36,13 +36,13 @@
 
       <div class="nativeDateTimePicker form-group">
         <label for="rule-start">Inicio: </label>
-        <input type="datetime-local" id="start" name="start">
+        <input type="datetime-local" id="start" name="start" value="{{$device->start}}">
         <span class="validity"></span>
       </div>
 
       <div class="nativeDateTimePicker form-group">
         <label for="rule-end">Fin: </label>
-        <input type="datetime-local" id="end" name="end">
+        <input type="datetime-local" id="end" name="end" value="{{$device->end}}">
         <span class="validity"></span>
       </div>
 

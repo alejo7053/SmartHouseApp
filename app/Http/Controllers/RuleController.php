@@ -37,11 +37,13 @@ class RuleController extends Controller
             'start' => 'required',
           ]);
         }
-        else if($request->action == "0")
-        {
-          $request->action=null;
-        }
         $input = $request->all();
+        if($request->action == "0")
+        {
+          $input['action']=null;
+          $input['start']=null;
+          $input['end']=null;
+        }
         $device->fill($input)->save();
         return redirect('home');
     }
